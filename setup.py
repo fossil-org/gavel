@@ -13,13 +13,12 @@ def read_long_description():
     with open('README.md', encoding='utf-8') as f:
         return f.read()
 
-from pistol import VERSION
 setup(
-    name='pistol',
+    name='python3-gavel',
     version=VERSION,
     author='dae',
     author_email='pixilreal@gmail.com',
-    description='smart terminal for smart people.',
+    description='pipx that installs git repositories.',
     long_description=read_long_description(),
     long_description_content_type='text/markdown',
     packages=find_packages(),
