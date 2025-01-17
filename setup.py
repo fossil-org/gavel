@@ -15,7 +15,7 @@ def read_long_description():
 
 setup(
     name='python3-gavel',
-    version=VERSION,
+    version='1',
     author='dae',
     author_email='pixilreal@gmail.com',
     description='pipx that installs git repositories.',
