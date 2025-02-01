@@ -98,7 +98,7 @@ def main():
             print("Error: No repository provided.")
             exit(1)
         repo = args[0]
-        author_index = args.index("-d") if "-d" in args else None
+        author_index = args.index("-a") if "-a" in args else None
         author = args[author_index + 1] if author_index is not None and len(argv) > author_index + 1 else "fossil-org"
         trusted_authors = {
             "PXL": "pixilll",
