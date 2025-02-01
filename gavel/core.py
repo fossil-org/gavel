@@ -42,17 +42,23 @@ def install(repo: str, use_pipx: bool = True):
     print(f"{name} installed successfully!")
 
 
-def uninstall(name: str, use_pipx: bool = True):
+def uninstall(name: str, args: list[str], use_pipx: bool = True):
     dest = BIN / name
 
     if not dest.exists():
         print(f"Error: {name} is not installed.")
         exit(1)
 
-    if use_pipx:
-        run_command(["pipx", "uninstall", name], "Failed to uninstall with pipx.")
+    if args:
+        pip_name_index = args.index("-n") if "-n" in args else None
+        pip_name = args[pip_name_index + 1] if pip_name_index is not None and len(argv) > pip_name_index + 1 else name
     else:
-        run_command(["pip", "uninstall", "-y", name], "Failed to uninstall with pip.")
+        pip_name = name
+
+    if use_pipx:
+        run_command(["pipx", "uninstall", pip_name], "Failed to uninstall with pipx.")
+    else:
+        run_command(["pip", "uninstall", "-y", pip_name], "Failed to uninstall with pip.")
 
     rmtree(dest)
     print(f"{name} uninstalled successfully!")
@@ -80,7 +86,7 @@ def list_installed():
 
 def main():
     if len(argv) < 2:
-        print("Usage: gavel <install|uninstall|update|list> <repo|package> [--use-packages]")
+        print("Usage: gavel <install|uninstall|update|list> <repo|package> [--get-packages]")
         exit(1)
 
     command = argv[1]
@@ -92,13 +98,20 @@ def main():
             print("Error: No repository provided.")
             exit(1)
         repo = args[0]
-        install(repo, use_pipx)
+        author_index = args.index("-d") if "-d" in args else None
+        author = args[author_index + 1] if author_index is not None and len(argv) > author_index + 1 else "fossil-org"
+        trusted_authors = {
+            "PXL": "pixilll",
+            "FSL": "fossil-org"
+        }
+        author = trusted_authors.get(author, author)
+        install(f"{author}/{repo}", use_pipx)
     elif command == "uninstall":
         if not args:
             print("Error: No package name provided.")
             exit(1)
         name = args[0]
-        uninstall(name, use_pipx)
+        uninstall(name, args, use_pipx)
     elif command == "update":
         if not args:
             print("Error: No package name provided.")
