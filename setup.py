@@ -22,7 +22,7 @@ setup(
     install_requires=[],
     entry_points={
         'console_scripts': [
-            'gavel=gavel.core:main'
+            'gavel=main:ep'
         ]
     },
 )
