@@ -10,43 +10,44 @@ BIN.mkdir(exist_ok=True)
 
 def run_command(command: list, error_message: str):
     try:
-        run(command, check=True)
+        run(command, check=True, capture_output=True)
     except CalledProcessError:
-        print(f"Error: {error_message}")
+        print(f"error: {error_message}")
         exit(1)
 
 
 def parse_repo(repo: str):
     parts = repo.split('/')
     if len(parts) < 2:
-        print("Error: Repository must be in the format 'author/repo'")
+        print("error: repository must be in the format 'author/repo'")
         exit(1)
     return parts[-1], '/'.join(parts[:-1])
 
 
-def install(repo: str, use_pipx: bool = True):
+def install(repo: str, args: list[str], use_pipx: bool = True):
     name, author = parse_repo(repo)
     dest = BIN / name
 
     if dest.exists():
-        print(f"Error: {name} is already installed.")
+        print(f"error: {name} is already installed.")
         exit(1)
 
-    run_command(["git", "clone", f"https://github.com/{repo}", str(dest)], "Failed to clone repository.")
+    run_command(["git", "clone", f"https://github.com/{repo}", str(dest)], "failed to clone repository.")
+    print(f"success: {name} installed to local bin")
 
     if use_pipx:
-        run_command(["pipx", "install", str(dest)], "Failed to install with pipx.")
+        run_command(["pipx", "install", str(dest)], f"failed to install with pipx.\nhint: try gavel uninstall {name}, then gavel install {''.join(args)} --get-packages")
     else:
-        run_command(["pip", "install", "--user", str(dest)], "Failed to install with pip.")
+        run_command(["pip", "install", "--user", str(dest)], f"failed to install with pip.")
 
-    print(f"{name} installed successfully!")
+    print(f"success: {name} installed to {'pipx' if use_pipx else 'pip'}")
 
 
 def uninstall(name: str, args: list[str], use_pipx: bool = True):
     dest = BIN / name
 
     if not dest.exists():
-        print(f"Error: {name} is not installed.")
+        print(f"error: {name} is not installed.")
         exit(1)
 
     if args:
@@ -55,38 +56,30 @@ def uninstall(name: str, args: list[str], use_pipx: bool = True):
     else:
         pip_name = name
 
-    if use_pipx:
-        run_command(["pipx", "uninstall", pip_name], "Failed to uninstall with pipx.")
-    else:
-        run_command(["pip", "uninstall", "-y", pip_name], "Failed to uninstall with pip.")
-
     rmtree(dest)
-    print(f"{name} uninstalled successfully!")
 
+    print(f"success: {name} uninstalled from local bin")
 
-def update(name: str):
-    dest = BIN / name
-    if not dest.exists():
-        print(f"Error: {name} is not installed.")
-        exit(1)
+    if use_pipx:
+        run_command(["pipx", "uninstall", pip_name], "failed to uninstall with pipx")
+    else:
+        run_command(["pip", "uninstall", "-y", pip_name], "failed to uninstall with pip")
 
-    run_command(["git", "-C", str(dest), "pull"], "Failed to update repository.")
-    print(f"{name} updated successfully!")
-
+    print(f"success: {name} uninstalled successfully from {'pipx' if use_pipx else 'pip'}")
 
 def list_installed():
     packages = [d.name for d in BIN.iterdir() if d.is_dir()]
     if not packages:
-        print("No installed packages.")
+        print("no installed packages.")
     else:
-        print("Installed packages:")
+        print("installed packages:")
         for package in packages:
             print(f"- {package}")
 
 
 def main():
     if len(argv) < 2:
-        print("Usage: gavel <install|uninstall|update|list> <repo|package> [--get-packages]")
+        print("usage: gavel <install|uninstall|list|bin> <package> [--get-packages | -a <author>]")
         exit(1)
 
     command = argv[1]
@@ -95,33 +88,29 @@ def main():
 
     if command == "install":
         if not args:
-            print("Error: No repository provided.")
+            print("error: no repository provided.")
             exit(1)
         repo = args[0]
         author_index = args.index("-a") if "-a" in args else None
         author = args[author_index + 1] if author_index is not None and len(argv) > author_index + 1 else "fossil-org"
         trusted_authors = {
-            "PXL": "pixilll",
-            "FSL": "fossil-org"
+            "@pxl": "pixilll",
+            "@fsl": "fossil-org"
         }
         author = trusted_authors.get(author, author)
-        install(f"{author}/{repo}", use_pipx)
+        install(f"{author}/{repo}", args, use_pipx)
     elif command == "uninstall":
         if not args:
-            print("Error: No package name provided.")
+            print("error: no package name provided.")
             exit(1)
         name = args[0]
         uninstall(name, args, use_pipx)
-    elif command == "update":
-        if not args:
-            print("Error: No package name provided.")
-            exit(1)
-        name = args[0]
-        update(name)
     elif command == "list":
         list_installed()
+    elif command == "bin":
+        print(f"local bin is located at {BIN}")
     else:
-        print("Error: Unknown command.")
+        print("error: unknown command.")
         exit(1)
 
 
