@@ -25,5 +25,5 @@ setup(
             'gavel=main:ep'
         ]
     },
-    include_package_data=True
+    py_modules=["main"]
 )
