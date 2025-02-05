@@ -1,4 +1,3 @@
-include main.py
 recursive-include gavel *
 recursive-include gavel/init *
 recursive-include openway *

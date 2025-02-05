@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a04cdb71-d5c3-48db-80ad-af8f96236542" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MANIFEST.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gavel/gavel/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gavel/gavel/init/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MANIFEST.in" beforeDir="false" afterPath="$PROJECT_DIR$/MANIFEST.in" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gavel/.openway" beforeDir="false" afterPath="$PROJECT_DIR$/gavel/gavel/.openway" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gavel/init/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gavel/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gavel/init/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gavel/gavel/init/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gavel/init/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/gavel/gavel/init/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/gavel/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

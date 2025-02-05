@@ -23,9 +23,8 @@ setup(
     install_requires=[],
     entry_points={
         'console_scripts': [
-            'gavel=main:ep'
+            'gavel=gavel.main:ep'
         ]
     },
-    include_package_data=True,
-    py_modules=["main"]
+    include_package_data=True
 )
