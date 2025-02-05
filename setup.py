@@ -12,7 +12,8 @@ setup(
     description='lightweight installer for FOSSIL products',
     long_description=read_long_description(),
     long_description_content_type='text/markdown',
-    packages=find_packages(),
+    packages=find_packages(where="gavel") + find_packages(where="openway"),
+    package_dir={"": "gavel", "openway": "openway"},
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
@@ -25,5 +26,6 @@ setup(
             'gavel=main:ep'
         ]
     },
+    include_package_data=True,
     py_modules=["main"]
 )
