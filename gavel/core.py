@@ -15,14 +15,12 @@ def run_command(command: list, error_message: str):
         print(f"error: {error_message}")
         exit(1)
 
-
 def parse_repo(repo: str):
     parts = repo.split('/')
     if len(parts) < 2:
         print("error: repository must be in the format 'author/repo'")
         exit(1)
     return parts[-1], '/'.join(parts[:-1])
-
 
 def install(repo: str, args: list[str], use_pipx: bool = True):
     name, author = parse_repo(repo)
@@ -33,14 +31,14 @@ def install(repo: str, args: list[str], use_pipx: bool = True):
         exit(1)
 
     run_command(["git", "clone", f"https://github.com/{repo}", str(dest)], "failed to clone repository.")
-    print(f"success: {name} installed to local bin")
+    print(f"success: {name} installed to gavel bin.")
 
     if use_pipx:
         run_command(["pipx", "install", str(dest)], f"failed to install with pipx.\nhint: try gavel uninstall {name}, then gavel install {''.join(args)} --get-packages")
     else:
         run_command(["pip", "install", "--user", str(dest)], f"failed to install with pip.")
 
-    print(f"success: {name} installed to {'pipx' if use_pipx else 'pip'}")
+    print(f"success: {name} installed to system bin.")
 
 
 def uninstall(name: str, args: list[str], use_pipx: bool = True):
@@ -58,14 +56,14 @@ def uninstall(name: str, args: list[str], use_pipx: bool = True):
 
     rmtree(dest)
 
-    print(f"success: {name} uninstalled from local bin")
+    print(f"success: {name} uninstalled from gavel bin.")
 
     if use_pipx:
-        run_command(["pipx", "uninstall", pip_name], "failed to uninstall with pipx")
+        run_command(["pipx", "uninstall", pip_name], "failed to uninstall with pipx.")
     else:
-        run_command(["pip", "uninstall", "-y", pip_name], "failed to uninstall with pip")
+        run_command(["pip", "uninstall", "-y", pip_name], "failed to uninstall with pip.")
 
-    print(f"success: {name} uninstalled successfully from {'pipx' if use_pipx else 'pip'}")
+    print(f"success: {name} uninstalled from system bin.")
 
 def list_installed():
     packages = [d.name for d in BIN.iterdir() if d.is_dir()]
@@ -79,7 +77,7 @@ def list_installed():
 
 def main():
     if len(argv) < 2:
-        print("usage: gavel <install|uninstall|list|bin> <package> [--get-packages | -a <author>]")
+        print("usage: gavel <install|uninstall|exec|list|bin> <package> [--get-packages | -a <author>]")
         exit(1)
 
     command = argv[1]
