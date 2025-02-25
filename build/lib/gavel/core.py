@@ -7,9 +7,6 @@ DIR = Path(__file__).parent
 BIN = DIR / "bin"
 BIN.mkdir(exist_ok=True)
 
-def force_remove_readonly(func, path, exc_info):
-    os.chmod(path, stat.S_IWRITE)
-    func(path)
 
 def run_command(command: list, error_message: str):
     try:
@@ -57,7 +54,7 @@ def uninstall(name: str, args: list[str], use_pipx: bool = True):
     else:
         pip_name = name
 
-    rmtree(dest, onerror=force_remove_readonly)
+    rmtree(dest)
 
     print(f"success: {name} uninstalled from gavel bin.")
 

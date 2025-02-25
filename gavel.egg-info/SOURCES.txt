@@ -1,0 +1,15 @@
+LICENSE
+MANIFEST.in
+README.md
+setup.py
+gavel/__init__.py
+gavel/__main__.py
+gavel/core.py
+gavel.egg-info/PKG-INFO
+gavel.egg-info/SOURCES.txt
+gavel.egg-info/dependency_links.txt
+gavel.egg-info/entry_points.txt
+gavel.egg-info/top_level.txt
+gavel/__pycache__/__init__.cpython-312.pyc
+gavel/__pycache__/__main__.cpython-312.pyc
+gavel/__pycache__/core.cpython-312.pyc

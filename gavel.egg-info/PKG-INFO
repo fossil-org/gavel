@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: gavel
+Version: 1
+Summary: lightweight installer for FOSSIL products
+Author: fossil
+Author-email: fossil.org1@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# gavel
+
+lightweight installer for FOSSIL products

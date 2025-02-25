@@ -1,0 +1,2 @@
+[console_scripts]
+gavel = gavel.core:main
