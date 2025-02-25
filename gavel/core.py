@@ -2,17 +2,16 @@ from subprocess import run, CalledProcessError
 from shutil import rmtree
 from sys import argv, exit
 from pathlib import Path
-from os import chmod, unlink
+from os import chmod
 from stat import S_IWRITE
 
 DIR = Path(__file__).parent
 BIN = DIR / "bin"
 BIN.mkdir(exist_ok=True)
 
-def force_remove_readonly(exc_info):
-    _, path, _ = exc_info
+def force_remove_readonly(func, path, exc_info):
     chmod(path, S_IWRITE)
-    unlink(path)
+    func(path)
 
 def run_command(command: list, error_message: str):
     try:
