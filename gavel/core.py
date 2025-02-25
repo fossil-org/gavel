@@ -77,7 +77,7 @@ def list_installed():
 
 def main():
     if len(argv) < 2:
-        print("usage: gavel <install|uninstall|exec|list|bin> <package> [--get-packages | -a <author>]")
+        print("usage: gavel <install|uninstall|list|bin> <package> [--get-packages | -a <author>]")
         exit(1)
 
     command = argv[1]
