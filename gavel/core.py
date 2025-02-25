@@ -92,7 +92,7 @@ def main():
         author_index = args.index("-a") if "-a" in args else None
         author = args[author_index + 1] if author_index is not None and len(argv) > author_index + 1 else "fossil-org"
         trusted_authors = {
-            "@pxl": "pixilll",
+            "@dzn": "by-dazen",
             "@fsl": "fossil-org"
         }
         author = trusted_authors.get(author, author)
